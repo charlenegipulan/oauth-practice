@@ -20,9 +20,15 @@ ReSTful routes for: facts:
 -------------------------------------------------------*/
 
 // POST /api/facts
-router.post('/facts', factsCtrl.create);
+router.post('/facts', isLoggedIn, factsCtrl.create);
 
 // DELETE /api/facts/:id
 router.delete('/facts/:id', factsCtrl.delete);
+
+
+function isLoggedIn(req, res, next) {
+  if ( req.isAuthenticated() ) return next();
+  res.redirect('/auth/google');
+}
 
 module.exports = router;
