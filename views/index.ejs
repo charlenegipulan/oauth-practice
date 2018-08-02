@@ -23,12 +23,12 @@
               <a href="/logout">
                 <i class="material-icons left">trending_flat</i>Logout</a>
             </li>
-          <$ } else { $>
-            <li>
-              <a href="/auth/google">
-                <i class="material-icons left">vpn_key</i>Login with Google</a>
-            </li>
-          <$ } $>
+            <$ } else { $>
+              <li>
+                <a href="/auth/google">
+                  <i class="material-icons left">vpn_key</i>Login with Google</a>
+              </li>
+              <$ } $>
         </ul>
       </div>
     </nav>
@@ -71,6 +71,13 @@
             <% student.facts.forEach(function(fact) { %>
               <li class="collection-item blue-grey-text text-darken-2"><%= fact.text %></li>
             <% }) %>
+            <% if (student._id === '<$= user && user.id $>') { %>
+              <div class="card-action">
+                <input type="text" id="fact" class="white-text">
+                <input type="button" class="btn white-text"
+                  onclick="addFact()" value="Add Fact">
+              </div>
+            <% } %>
           </ul>
         </div>
       </div>

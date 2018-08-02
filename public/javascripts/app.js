@@ -36,6 +36,25 @@ function doSearch() {
   render();
 }
 
+function addFact() {
+  if ( !$('#fact').val() ) return; //input cant be empty
+  fetch('/api/facts', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify( { fact: $('#fact').val() } ),
+    credentials: 'include' //send the cookies
+  })
+  .then(res => res.json())
+  .then(data => {
+    //clear the <input>
+    $('#fact').val('');
+    // find the updated student's index
+    var idx = allStudents.findIndex(s => s._id === data._id);
+    allStudents[idx] = data;
+    render();
+  });
+}
+
 /* ----- event handlers ----- */
 
 $('#search').on('keypress blur', function(evt) {
