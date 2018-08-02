@@ -5,16 +5,17 @@ var template;
 
 $(function() {
   // load all students one time at load
+  //get request with jQuery
   $.get('/api/students', function(data) {
     allStudents = data;
-    template = _.template($('#studentTemplate').html());
+    template = _.template($('#studentTemplate').html()); //select students with studentTemplate id
     render();
   });
 });
 
 function render() {
   applyFilterAndSort();
-  $('#students').html(template({students: filteredStudents}));
+  $('#students').html(template({students: filteredStudents})); //call template function provide data(students)
 }
 
 function applyFilterAndSort() {
