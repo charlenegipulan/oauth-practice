@@ -63,25 +63,44 @@
       <div class="card blue-grey student">
         <div class="card-content white-text">
           <div>
-          <i class="small material-icons">perm_identity</i>
-          <span class="card-title"><%= student.name %></span>
-          <% if (student.cohort) { %><span class="badge white">WDI <%= student.cohort %></span><% } %>
+            <% if (student.avatar) { %>
+              <img src="<%= student.avatar %>" alt="" class="circle responsive-img">&nbsp;&nbsp;
+            <% } else { %>
+              <i class="small material-icons">perm_identity</i>
+            <% } %>
+              <span class="card-title"><%= student.name %></span>
+            <% if (student.cohort) { %>
+              <span class="badge white">WDI <%= student.cohort %></span>
+            <% } else if (student._id === '<$= user && user.id $>') { %>
+              <select id="cohort" onchange="setCohort()" class="right blue-grey-text">
+                <option value="" disabled selected>SET COHORT</option>
+                <option value="57 (DTLA)">57 (DTLA)</option>
+                <option value="55 (DTLA)">55 (DTLA)</option>
+                <option value="53 (DTLA)">53 (DTLA)</option>
+                <option value="49 (DTLA)">49 (DTLA)</option>
+                <option value="44 (DTLA)">44 (DTLA)</option>
+                <option value="40 (OC)">40 (OC)</option>
+              </select>
+            <% } %>
           </div>
           <ul class="collection">
             <% student.facts.forEach(function(fact) { %>
-              <li class="collection-item blue-grey-text text-darken-2"><%= fact.text %></li>
-            <% }) %>
-            <% if (student._id === '<$= user && user.id $>') { %>
-              <div class="card-action">
-                <input type="text" id="fact" class="white-text">
-                <input type="button" class="btn white-text"
-                  onclick="addFact()" value="Add Fact">
-              </div>
-            <% } %>
+              <li class="collection-item blue-grey-text text-darken-2">
+                <div><%= fact.text %>
+                  <%= student._id === '<$= user && user.id $>' ? `<button class="secondary-content btn-small red-text" onclick="deleteFact('${fact._id}')">X</button>` : '' %>
+                </div>
+              </li>
+              <% }) %>
+                <% if (student._id === '<$= user && user.id $>') { %>
+                  <div class="card-action">
+                    <input type="text" id="fact" class="white-text">
+                    <input type="button" class="btn white-text" onclick="addFact()" value="Add Fact">
+                  </div>
+                  <% } %>
           </ul>
         </div>
       </div>
-    <% }) %>
+      <% }) %>
   </script>
 
   <!-- jQuery (required by Materialize) -->

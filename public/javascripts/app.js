@@ -55,6 +55,19 @@ function addFact() {
   });
 }
 
+function deleteFact(factId) {
+  fetch(`/api/facts/${factId}`, {
+    method: 'DELETE',
+    credentials: 'include' //send cookie
+  })
+  .then(res => res.json())
+  .then(data => {
+    var student = allStudents.find(s => s.facts.some(f => f._id == factId));
+    student.facts.splice(student.facts.findIndex(f => f._id == factId), 1);
+    render();
+  });
+}
+
 /* ----- event handlers ----- */
 
 $('#search').on('keypress blur', function(evt) {

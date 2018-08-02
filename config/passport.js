@@ -10,13 +10,23 @@ passport.use(new GoogleStrategy({
     Student.findOne({ googleId: profile.id }, function(err, student) {
         if (err) return cb(err);
         if (student) {
-            return cb(null, student);
+            if (!student.avatar) {
+                student.avatar = profile.photos[0].value;
+                student.save(function(err) {
+                    return cb(null, student);
+                });
+            } else {
+                return cb(null, student);
+            }    
         } else {
           var newStudent = new Student({
+            // new student via 0auth
             name: profile.displayName,
             email: profile.emails[0].value,
-            googleId: profile.id
+            googleId: profile.id,
+            avatar: profile.picture
           });
+          console.log(student);
           newStudent.save(function(err) {
             if (err) return cb(err);
             return cb(null, newStudent);

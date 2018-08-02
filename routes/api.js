@@ -22,6 +22,7 @@ ReSTful routes for: facts:
 // POST /api/facts
 router.post('/facts', isLoggedIn, factsCtrl.create);
 
+
 // DELETE /api/facts/:id
 router.delete('/facts/:id', factsCtrl.delete);
 
